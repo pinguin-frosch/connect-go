@@ -2,12 +2,16 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/pinguin-frosch/connect-go/board"
+	"github.com/pinguin-frosch/connect-go/game"
 )
 
 func main() {
 	fmt.Println("Connect four!")
 
 	b := board.New(6, 7)
-	fmt.Println(b.Data)
+	g := game.New(&b)
+	g.Setup()
+	fmt.Println(g.Players[0].Name)
 }
