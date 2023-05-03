@@ -17,7 +17,7 @@ func New(board *board.Board) Game {
 
 func (g *Game) Setup() {
 	g.Players[0].Name = "Player 1"
-	g.Players[0].Symbol = 'C'
+	g.Players[0].Symbol = "C"
 	g.Players[1].Name = "Player 2"
-	g.Players[1].Symbol = 'F'
+	g.Players[1].Symbol = "F"
 }
