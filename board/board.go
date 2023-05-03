@@ -19,25 +19,42 @@ func New(width int, height int) Board {
 	return b
 }
 
-func (b *Board) AddPiece(columnIndex int, symbol string) {
+func (b *Board) AddPiece(columnIndex int, symbol string) (column int, row int) {
 	for i := b.Width - 1; i >= 0; i-- {
 		if b.Data[columnIndex][i] == "" {
 			b.Data[columnIndex][i] = symbol
-			break
+			return columnIndex, i
 		}
 	}
+	return 0, 0
+}
+
+// TODO: implement this properly
+func (b *Board) CheckWin(column int, row int, symbol string) bool {
+	counts := map[string]int{}
+	for _, v := range counts {
+		if v >= 4 {
+			return true
+		}
+	}
+	return false
 }
 
 func (b *Board) IsValidColumn(columnIndex int) bool {
 	if columnIndex >= b.Height || columnIndex < 0 {
 		return false
 	}
+	used := 0
 	for i := b.Width - 1; i >= 0; i-- {
 		if b.Data[columnIndex][i] != "" {
-			return false
+			used++
 		}
 	}
-	return true
+	if used < b.Width {
+		return true
+	} else {
+		return false
+	}
 }
 
 func (b *Board) PrintBoard() {

@@ -13,5 +13,5 @@ func main() {
 	b := board.New(6, 7)
 	g := game.New(&b)
 	g.Setup()
-	fmt.Println(g.Players[0].Name)
+	g.Play()
 }
