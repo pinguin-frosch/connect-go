@@ -19,6 +19,27 @@ func New(width int, height int) Board {
 	return b
 }
 
+func (b *Board) AddPiece(columnIndex int, symbol string) {
+	for i := b.Width - 1; i >= 0; i-- {
+		if b.Data[columnIndex][i] == "" {
+			b.Data[columnIndex][i] = symbol
+			break
+		}
+	}
+}
+
+func (b *Board) IsValidColumn(columnIndex int) bool {
+	if columnIndex >= b.Height || columnIndex < 0 {
+		return false
+	}
+	for i := b.Width - 1; i >= 0; i-- {
+		if b.Data[columnIndex][i] != "" {
+			return false
+		}
+	}
+	return true
+}
+
 func (b *Board) PrintBoard() {
 	for i := 0; i < b.Width; i++ {
 		for j := 0; j < b.Height; j++ {
@@ -31,4 +52,5 @@ func (b *Board) PrintBoard() {
 		}
 		fmt.Print("\n")
 	}
+	fmt.Println()
 }
