@@ -47,15 +47,17 @@ func (b *Board) CheckWin(column int, row int, symbol string) bool {
 	}
 
 	for x := 0; column-x >= 0 && row+x < b.Width; x++ {
-		if b.Data[column-x][row+x] == symbol {
-			counts["NE"]++
+		if b.Data[column-x][row+x] != symbol {
+			break
 		}
+		counts["NE"]++
 	}
 
 	for x := 0; row+x < b.Width; x++ {
-		if b.Data[column][row+x] == symbol {
-			counts["E"]++
+		if b.Data[column][row+x] != symbol {
+			break
 		}
+		counts["E"]++
 	}
 
 	for x := 0; column+x < b.Height && row+x < b.Width; x++ {
