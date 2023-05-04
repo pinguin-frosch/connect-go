@@ -42,7 +42,7 @@ func (g *Game) Play() {
 			fmt.Print("Invalid column, try again: ")
 		}
 
-		fmt.Printf("Adding your piece in column %d\n", column)
+		fmt.Printf("Adding your piece in column %d\n", column+1)
 		col, row := g.Board.AddPiece(column, g.Players[i].Symbol)
 
 		if g.Board.CheckWin(col, row, g.Players[i].Symbol) {
