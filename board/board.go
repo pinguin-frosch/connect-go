@@ -29,9 +29,56 @@ func (b *Board) AddPiece(columnIndex int, symbol string) (column int, row int) {
 	return 0, 0
 }
 
-// TODO: implement this properly
 func (b *Board) CheckWin(column int, row int, symbol string) bool {
 	counts := map[string]int{}
+
+	for x := 0; column-x >= 0 && row-x >= 0; x++ {
+		if b.Data[column-x][row-x] != symbol {
+			break
+		}
+		counts["NW"]++
+	}
+
+	for x := 0; column-x >= 0; x++ {
+		if b.Data[column-x][row] != symbol {
+			break
+		}
+		counts["N"]++
+	}
+
+	for x := 0; column-x >= 0 && row+x < b.Width; x++ {
+		if b.Data[column-x][row+x] == symbol {
+			counts["NE"]++
+		}
+	}
+
+	for x := 0; row+x < b.Width; x++ {
+		if b.Data[column][row+x] == symbol {
+			counts["E"]++
+		}
+	}
+
+	for x := 0; column+x < b.Height && row+x < b.Width; x++ {
+		if b.Data[column+x][row+x] != symbol {
+			break
+		}
+		counts["SE"]++
+	}
+
+	for x := 0; column+x < b.Height; x++ {
+		if b.Data[column+x][row] != symbol {
+			break
+		}
+		counts["S"]++
+	}
+
+	for x := 0; column+x < b.Height && row-x >= 0; x++ {
+		if b.Data[column+x][row-x] != symbol {
+			break
+		}
+		counts["SW"]++
+	}
+
 	for _, v := range counts {
 		if v >= 4 {
 			return true

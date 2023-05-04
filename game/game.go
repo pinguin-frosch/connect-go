@@ -45,7 +45,9 @@ func (g *Game) Play() {
 		col, row := g.Board.AddPiece(column, g.Players[i].Symbol)
 
 		if g.Board.CheckWin(col, row, g.Players[i].Symbol) {
-			fmt.Printf("%s wins!", g.Players[i].Name)
+			g.Board.PrintBoard()
+			fmt.Printf("%s wins!\n", g.Players[i].Name)
+			break
 		}
 	}
 }
