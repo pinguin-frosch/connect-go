@@ -107,16 +107,28 @@ func (b *Board) IsValidColumn(columnIndex int) bool {
 }
 
 func (b *Board) PrintBoard() {
+	fmt.Println()
+	for i := 0; i < b.Height; i++ {
+		fmt.Printf(" %d", i+1)
+	}
+	fmt.Println()
+
 	for i := 0; i < b.Width; i++ {
 		for j := 0; j < b.Height; j++ {
 			v := b.Data[j][i]
+			fmt.Print("|")
 			if v == "" {
 				fmt.Print("·")
 			} else {
 				fmt.Print(v)
 			}
 		}
-		fmt.Print("\n")
+		fmt.Print("|\n")
 	}
-	fmt.Println()
+
+	fmt.Print("+")
+	for i := 0; i < b.Height-1; i++ {
+		fmt.Print("--")
+	}
+	fmt.Print("-+\n\n")
 }

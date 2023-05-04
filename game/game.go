@@ -35,6 +35,7 @@ func (g *Game) Play() {
 				scanner.Scan()
 				continue
 			}
+			column--
 			if g.Board.IsValidColumn(column) {
 				break
 			}
