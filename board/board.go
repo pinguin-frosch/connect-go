@@ -5,9 +5,10 @@ import (
 )
 
 type Board struct {
-	Width  int
-	Height int
-	Data   [][]string
+	Width     int
+	Height    int
+	Data      [][]string
+	UsedTiles int
 }
 
 func New(width int, height int) Board {
@@ -23,15 +24,15 @@ func (b *Board) AddPiece(columnIndex int, symbol string) (column int, row int) {
 	for i := b.Width - 1; i >= 0; i-- {
 		if b.Data[columnIndex][i] == "" {
 			b.Data[columnIndex][i] = symbol
+			b.UsedTiles++
 			return columnIndex, i
 		}
 	}
 	return 0, 0
 }
 
-// FIXME: Should also check for draw and also checks win states with the piece
-// in the middle
-func (b *Board) CheckWin(column int, row int, symbol string) bool {
+// Returns -1 if the game can be continued, 0 if the game is a draw, 1 if the game is won
+func (b *Board) CheckWin(column int, row int, symbol string) int {
 	counts := map[string]int{}
 
 	counts["LD"] = 1
@@ -86,11 +87,15 @@ func (b *Board) CheckWin(column int, row int, symbol string) bool {
 
 	for _, v := range counts {
 		if v >= 4 {
-			return true
+			return 1
 		}
 	}
 
-	return false
+	if b.UsedTiles >= b.Width*b.Height {
+		return 0
+	} else {
+		return -1
+	}
 }
 
 func (b *Board) IsValidColumn(columnIndex int) bool {
