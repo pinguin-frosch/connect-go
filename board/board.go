@@ -29,56 +29,59 @@ func (b *Board) AddPiece(columnIndex int, symbol string) (column int, row int) {
 	return 0, 0
 }
 
+// FIXME: Should also check for draw and also checks win states with the piece
+// in the middle
 func (b *Board) CheckWin(column int, row int, symbol string) bool {
 	counts := map[string]int{}
 
-	for x := 0; column-x >= 0 && row-x >= 0; x++ {
+	counts["LD"] = 1
+	for x := 1; column-x >= 0 && row-x >= 0; x++ {
 		if b.Data[column-x][row-x] != symbol {
 			break
 		}
-		counts["NW"]++
+		counts["LD"]++
 	}
-
-	for x := 0; column-x >= 0; x++ {
-		if b.Data[column-x][row] != symbol {
-			break
-		}
-		counts["N"]++
-	}
-
-	for x := 0; column-x >= 0 && row+x < b.Width; x++ {
-		if b.Data[column-x][row+x] != symbol {
-			break
-		}
-		counts["NE"]++
-	}
-
-	for x := 0; row+x < b.Width; x++ {
-		if b.Data[column][row+x] != symbol {
-			break
-		}
-		counts["E"]++
-	}
-
-	for x := 0; column+x < b.Height && row+x < b.Width; x++ {
+	for x := 1; column+x < b.Height && row+x < b.Width; x++ {
 		if b.Data[column+x][row+x] != symbol {
 			break
 		}
-		counts["SE"]++
+		counts["LD"]++
 	}
 
-	for x := 0; column+x < b.Height; x++ {
+	counts["V"] = 1
+	for x := 1; column-x >= 0; x++ {
+		if b.Data[column-x][row] != symbol {
+			break
+		}
+		counts["V"]++
+	}
+	for x := 1; column+x < b.Height; x++ {
 		if b.Data[column+x][row] != symbol {
 			break
 		}
-		counts["S"]++
+		counts["V"]++
 	}
 
-	for x := 0; column+x < b.Height && row-x >= 0; x++ {
+	counts["RD"] = 1
+	for x := 1; column-x >= 0 && row+x < b.Width; x++ {
+		if b.Data[column-x][row+x] != symbol {
+			break
+		}
+		counts["RD"]++
+	}
+	for x := 1; column+x < b.Height && row-x >= 0; x++ {
 		if b.Data[column+x][row-x] != symbol {
 			break
 		}
-		counts["SW"]++
+		counts["RD"]++
+	}
+
+	counts["H"] = 1
+	for x := 1; row+x < b.Width; x++ {
+		if b.Data[column][row+x] != symbol {
+			break
+		}
+		counts["H"]++
 	}
 
 	for _, v := range counts {
@@ -86,6 +89,7 @@ func (b *Board) CheckWin(column int, row int, symbol string) bool {
 			return true
 		}
 	}
+
 	return false
 }
 
